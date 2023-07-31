@@ -1,9 +1,9 @@
 apiVersion: v1alpha1
-sts-region: us-east-1
+sts-region: ap-southeast-2
 discovery:
   jobs:
     - type: AWS/ECS
-      regions: [us-east-1]
+      regions: [ap-southeast-2]
       period: 300
       length: 300
       metrics:
@@ -19,9 +19,97 @@ discovery:
         - name: MemoryUtilization
           statistics:
             - Average
+
     - type: AWS/EC2
-      regions: [us-east-1]
+      regions: [ap-southeast-2]
       metrics:
         - name: CPUUtilization
           statistics:
             - Average
+
+    - type: AWS/ApplicationELB
+      regions: [ap-southeast-2]
+      period: 300
+      length: 300
+      metrics:
+        - name: HealthyHostCount
+          statistics: [Sum]
+        - name: UnHealthyHostCount
+          statistics: [Sum]
+        - name: RequestCount
+          statistics: [Average]
+        - name: TargetResponseTime
+          statistics: [Average]
+        - name: ActiveConnectionCount
+          statistics: [Sum]
+        - name: NewConnectionCount
+          statistics: [Sum]
+        - name: RejectedConnectionCount
+          statistics: [Sum]
+        - name: TargetConnectionErrorCount
+          statistics: [Sum]
+        - name: IPv6RequestCount
+          statistics: [Sum]
+        - name: RequestCountPerTarget
+          statistics: [Sum]
+        - name: NonStickyRequestCount
+          statistics: [Sum]
+        - name: HTTPCode_Target_2XX_Count
+          statistics: [Sum]
+        - name: HTTPCode_Target_3XX_Count
+          statistics: [Sum]
+        - name: HTTPCode_Target_4XX_Count
+          statistics: [Sum]
+        - name: HTTPCode_Target_5XX_Count
+          statistics: [Sum]
+        - name: HTTPCode_ELB_3XX_Count
+          statistics: [Sum]
+        - name: HTTPCode_ELB_4XX_Count
+          statistics: [Sum]
+        - name: HTTPCode_ELB_5XX_Count
+          statistics: [Sum]
+        - name: ProcessedBytes
+          statistics: [Sum]
+        - name: IPv6ProcessedBytes
+          statistics: [Sum]
+        - name: ConsumedLCUs
+          statistics: [Average]
+        - name: ClientTLSNegotiationErrorCount
+          statistics: [Sum]
+        - name: TargetTLSNegotiationErrorCount
+          statistics: [Sum]
+        - name: RuleEvaluations
+          statistics: [Sum]
+        - name: TargetResponseTime
+          statistics: [Average]
+
+    - type: AWS/S3
+      regions: [ap-southeast-2]
+      period: 86400
+      length: 86400
+      metrics:
+        - name: NumberOfObjects
+          statistics: [Average]
+        - name: BucketSizeBytes
+          statistics: [Average]
+      
+    - type: AWS/CloudFront
+      regions: [ap-southeast-2]
+      DistributionId: YOUR_CLOUDFRONT_DISTRIBUTION_ID
+      period: 300
+      length: 300
+      metrics:
+        - name: Requests
+          statistics: [Sum]
+        - name: BytesDownloaded
+          statistics: [Sum]
+        - name: BytesUploaded
+          statistics: [Sum]
+        - name: 4xxErrorRate
+          statistics: [Sum]
+        - name: 5xxErrorRate
+          statistics: [Sum]
+        - name: CacheHitRate
+          statistics: [Average]
+        - name: Latency
+          statistics: [Average]
